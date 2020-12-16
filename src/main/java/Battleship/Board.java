@@ -96,6 +96,70 @@ public class Board {
 	}
 	
 	
+	//MODIFICACIONES LIGERAS PARA AUTOMATED TESTING 
+		public String printboardStr() {
+			
+			String finalOutput = "  A B C D E F G H\n";
+			System.out.println("  A B C D E F G H");
+			
+			int row_number = 0;
+			
+			for (int row = 0; row < 8; row++) {
+				
+				System.out.print(row_number);
+				System.out.print(" ");
+				
+				finalOutput = finalOutput + row_number + " ";
+				
+				for (int col = 0; col < 8; col++) {
+					
+					System.out.print(m_board[row][col]);
+					System.out.print(" ");
+					
+					finalOutput = finalOutput + m_adversaryboard[row][col] + " ";
+					
+				}
+				
+				finalOutput = finalOutput + "\n";
+				System.out.println();
+				row_number++;
+			}
+			
+			return finalOutput;
+		}
+
+		//MODIFICACIONES LIGERAS PARA AUTOMATED TESTING
+		public String printadversaryboardStr() {
+			
+			String finalOutput = "  A B C D E F G H\n";
+			
+			System.out.println("  A B C D E F G H");
+			
+			int row_number = 0;
+			
+			for (int row = 0; row < 8; row++) {
+				
+				System.out.print(row_number);
+				System.out.print(" ");
+				
+				finalOutput = finalOutput + row_number + " ";
+				
+				for (int col = 0; col < 8; col++) {
+					
+					System.out.print(m_adversaryboard[row][col]);
+					System.out.print(" ");
+					
+					finalOutput = finalOutput + m_adversaryboard[row][col] + " ";
+					
+				}
+				
+				finalOutput = finalOutput + "\n";
+				System.out.println();
+				row_number++;
+			}
+			
+			return finalOutput;
+		}
 	
 	
 	public Board() {

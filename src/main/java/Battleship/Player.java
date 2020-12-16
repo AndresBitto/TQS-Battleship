@@ -4,7 +4,17 @@ import java.util.Scanner;
 public class Player {
 	
 	private Board m_playerboard;
+	private ConsoleInput in;
 	
+	String string_to_intErrorMsg = "";
+	//public String chooseshotdirectionMock_ErrorMsg = "";
+	public String chooseshotdirectionMock = "";
+	public Player(ConsoleInput in) {
+		
+		m_playerboard = new Board();
+		this.in = in;
+		
+	}
 	
 	
 	public Board getM_playerboard() {
@@ -47,8 +57,62 @@ public class Player {
 		
 		
 	}
-
+	//MODIFICACIONES LIGERAS PARA AUTOMATED TESTING
+	public int[][] chooseshotdirectionMock(Board target_board ) {
+		
+		
+		Scanner input = new Scanner(System.in);
+		String col_pos;
+		int row_pos;
+		chooseshotdirectionMock = "";
+		
+		do {
+			
+			if (!string_to_intErrorMsg.equals(""))
+	        	chooseshotdirectionMock += string_to_intErrorMsg;
+			
+		System.out.println("Now you will have to try shoot a ship of the adversary board");
+		chooseshotdirectionMock += "Now you will have to try shoot a ship of the adversary board" + "\n";
+			
+		// Getting String input
+        System.out.print("Enter a word between A - H in capital letters: ");
+        chooseshotdirectionMock += "Enter a word between A - H in capital letters: ";
+        //col_pos = input.next();
+        col_pos = in.getInputStr();
+        System.out.println("Text entered = " + col_pos);
+        chooseshotdirectionMock += "Text entered = " + col_pos + "\n";
+        
+        // Getting int input
+        System.out.print("Enter a row number between 0 - 7: "); 
+        chooseshotdirectionMock += "Enter a row number between 0 - 7: ";
+        //row_pos = input.nextInt();
+        row_pos = in.getInputInt();
+        System.out.println("You entered " + row_pos);
+        chooseshotdirectionMock += "You entered " + row_pos + "\n";;
+	        
+        
+        
+//        if (!chooseshotdirectionMock_ErrorMsg.equals(""))
+//        	chooseshotdirectionMock_ErrorMsg += string_to_intErrorMsg + "\n";
+        
+        
+		} while (!targetableposition(target_board, col_pos, row_pos));
+		
+		
+		
+		int[][] position = {{row_pos,string_to_int(col_pos)}};
+		
+		
+		
+		return position;
+		
+		
+		
+		
+	}
+	
 	public String int_to_string(int col) {
+		string_to_intErrorMsg = "";
 		
 		String col_pos = null;
 		
@@ -80,6 +144,8 @@ public class Player {
 				
 			default:
 				System.out.println(" Incorrect value for function CPUinsertship switch_case has failed ");
+				string_to_intErrorMsg = " Incorrect value for function CPUinsertship switch_case has failed ";
+				
 				col_pos = "ERROR";
 				break;
 			}
@@ -237,6 +303,7 @@ public class Player {
 	
 	public int string_to_int(String col) {
 		
+		string_to_intErrorMsg = "";
 		int col_to_numeric = -1;
 		
 		switch (col) {
@@ -267,6 +334,7 @@ public class Player {
 			
 		default:
 			System.out.println(" Incorrect value for function string_to_int switch_case has failed ");
+			string_to_intErrorMsg += " Incorrect value for function string_to_int switch_case has failed \n";
 			col_to_numeric = -1;
 			break;
 		}
@@ -323,6 +391,59 @@ public class Player {
 		
 	}
 	
+	//MODIFICACIONES LIGERAS PARA AUTOMATED TESTING
+	public String insertshipMock() {
+		//This functions try to insert a ship in the board of the player
+		//The position to insert the ship is selected with the keyboard by the user
+		
+		String allOutput = "";
+		
+		Scanner input = new Scanner(System.in);
+		
+		String col_pos;
+		int row_pos;
+		int number_of_ships = 4;
+		
+		
+		do {
+			
+		System.out.println("There are " + number_of_ships + " ships left to allocate");
+		allOutput += "There are " + number_of_ships + " ships left to allocate" + "\n";
+			
+		// Getting String input
+        System.out.print("Enter a word between A - H in capital letters: ");
+        allOutput += "Enter a word between A - H in capital letters: ";
+        //col_pos = input.next();
+        col_pos = in.getInputStr();
+        System.out.println("Text entered = " + col_pos);
+        allOutput += "Text entered = " + col_pos + "\n";
+        
+        // Getting int input
+        System.out.print("Enter a row number between 0 - 7: ");
+        allOutput += "Enter a row number between 0 - 7: ";
+        
+        //row_pos = input.nextInt();
+        row_pos = in.getInputInt();
+        System.out.println("You entered " + row_pos);
+        allOutput += "You entered " + row_pos + "\n";
+        
+	        if (marcableposition(m_playerboard, col_pos, row_pos)) { 
+	        	
+				number_of_ships--;
+				int converted_col = string_to_int(col_pos);
+		        m_playerboard.getM_board()[row_pos][converted_col] = 1;
+				
+			}
+	        
+	        if (!string_to_intErrorMsg.equals(""))
+        		allOutput += string_to_intErrorMsg;
+	        
+
+		} while (number_of_ships != 0);
+
+		
+		return allOutput;
+	}
 	
 
 	public void CPUinsertship(int[][] shipsposition) {
